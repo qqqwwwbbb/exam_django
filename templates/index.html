@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="index_name">
+    {% if user.is_authenticated %}
+      <h1>Привет, {{ user.username }}!</h1>
+    {% else %}
+      <h1>Привет, гость!</h1>
+    {% endif %}
+  </div>
+  
+  <p class="app_inPr">Количество заявок, принятых в работу на нашем сайте = {{ num_applications_in_progress }}</p>
+  <p class="app_done_prim">Вот пример наших последних заявок: </p>
+
+  
+    {% for application in applications_done %}
+      {% if forloop.counter <= 4 %}
+        <div class="app_done">
+            <h4>{{ application.title }}</h4>
+            <p>{{ application.category }}</p>
+            <img width="500px" height="300px" src="{{ application.photo.url }}">
+            <p>{{ application.date }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+{% endblock %}
+

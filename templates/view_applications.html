@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if not user.is_superuser %}
+    <h1>Мои заявки</h1>
+  {% else %}
+    <h1>Все заявки</h1>
+  {% endif %}
+  <form class="apps_form" method="get">
+    {{ filter.form }}
+    <button type="submit">Найти</button>
+  </form>
+  {% if applications_borrower %}
+    {% for application in filter.qs %}
+      <div class="app_all">
+        <h4>{{ application.title }}</h4>
+        <p>{{ application.description }}</p>
+        <p>Категория: {{ application.category }}</p>
+        <img width="500px" height="300px" src="{{ application.photo.url }}">
+        <p>Статус: {{ application.status_verbose }}</p>
+        <p>{{ application.date }}</p>
+        {% if user.is_superuser and application.status == 'new' %}
+            <a href="{% url 'confirm_update' application.pk 'in progress' %}">Статус - в процессе</a>
+            <a href="{% url 'confirm_update' application.pk  'done' %}">Статус - выполнено</a>
+        {% elif application.status == 'new' %}
+          <a href="{% url 'delete_application' application.pk %}">Удалить</a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="no_app">У вас нет действующих заявок</p>
+  {% endif %}
+{% endblock %}

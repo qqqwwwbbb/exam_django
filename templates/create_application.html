@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="cr_app"><h1>Создание заявки</h1>
+    <form method="post" enctype="multipart/form-data">
+      {{form.as_p}}
+      {% csrf_token %}
+      <button type="submit">Создать</button>
+    </form>
+  </div>
+{% endblock %}

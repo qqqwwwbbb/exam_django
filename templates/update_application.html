@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="up_app">
+        <h1>Изменение статуса</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+{% endblock %}

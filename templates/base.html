@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %} Главная {% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'web/style.css' %}">
+</head>
+<body>
+<nav>
+    <div>
+        <ul class="nav_inner">
+            <li><h2 class="logo">Design.pro</h2></li>
+            <li><a href="{% url 'index' %}">Главная</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}">Ваш профиль</a></li>
+                {% if not user.is_superuser %}
+                    <li><a href="{% url 'create_application' %}">Создать заявку</a></li>
+                {% endif %}
+                {% if user.is_superuser %}
+                    <li><a href="{% url 'view_applications' %}">Управление заявками</a></li>
+                {% else %}
+                    <li><a href="{% url 'view_applications' %}">Мои заявки</a></li>
+                {% endif %}
+                {% if user.is_superuser %}
+                    <li><a href="{% url 'view_categories' %}">Управление категориями</a>
+                {% endif %}
+                <li><a href="{% url 'logout' %}">Выход</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Вход</a></li>
+                <li><a href="{% url 'register' %}">Регистрация</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<main>
+    <div class="cont"><div class="cont_inner">{% block content %}{% endblock %}</div></div>
+</main>
+</body>
+</html>

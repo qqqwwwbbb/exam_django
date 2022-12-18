@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="cr_cat">
+    <h1>Добавление категории</h1>
+    <form method="post">
+      {{form.as_p}}
+      {% csrf_token %}
+      <button type="submit">Добавить</button>
+    </form>
+  </div>
+{% endblock %}

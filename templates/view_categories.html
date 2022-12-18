@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="add_cat">
+    <h1>Управление категориями</h1>
+    <a href="{% url 'create_category' %}">Добавить новую категорию</a>
+  </div>
+  
+  {% if categories_list %}
+    <h2>Удалить категории</h4>
+    {% for category in categories_list %}
+      <p class="cat">
+        {{ category.title }} - 
+        <a href="{% url 'delete_category' category.pk %}">удалить</a>
+      </p>
+    {% endfor %}
+  {% else %}
+    <p>Не существует категорий заявок</p>
+  {% endif %}
+{% endblock %}
